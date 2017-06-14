@@ -6,6 +6,10 @@ const searchReposReducer = (state, action) => {
             return Object.assign({}, state, {
                 issues: {
                     isFetching: true
+                },
+                user: {
+                    name: action.user,
+                    repo: action.repo
                 }
             });
         case Actions.SEARCH_ISSUES_SUCCEDED:

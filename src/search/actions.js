@@ -6,7 +6,9 @@ export const SEARCH_ISSUES_SUCCEDED = 'SEARCH_ISSUES_SUCCEDED';
 export const searchIssues = (gitUser, repo) => ((dispatch) => {
     dispatch({
         type: SEARCH_ISSUES_REQUESTED,
-        gitUser,
-        repo
+        user: {
+            name: gitUser,
+            repo
+        }
     });
 });
