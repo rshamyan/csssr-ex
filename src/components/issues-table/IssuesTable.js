@@ -12,7 +12,7 @@ import './IssuesTable.css';
 
 export default (props) => {
   const rows = props.issues.map(issue => (
-    <TableRow key={issue.id}>
+    <TableRow key={issue.id} striped={true}>
       <TableRowColumn className="table__cell table__cell_id">
         #{issue.number}
       </TableRowColumn>

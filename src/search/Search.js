@@ -7,63 +7,67 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import * as Actions from './actions';
 import IssuesTable from '../components/issues-table/IssuesTable';
+import Pagination from '../components/pagination/Pagination';
 
-const mapStateToProps = ({issues: {byId = {}, allIds = []}, user}) =>(
+const mapStateToProps = ({issues: {next, prev, last, first, current, byId = {}, allIds = []}, user}) =>(
     {
       user,
-      issues: allIds.map(id => byId[id])
+      issues: allIds.map(id => byId[id]),
+      next,
+      prev,
+      current,
+      last,
+      first
     }
 );
 
 const mapDispatchToProps = (dispatch) => ({
-  onClick(name, repo) {
-    Actions.searchIssues(name, repo)(dispatch);
+  searchIssues(name, repo, url) {
+    Actions.searchIssues(name, repo, url)(dispatch);
   }
 })
 
 class Search extends Component {
   render() {
+    const searchResult = this.props.issues.length > 0 && (
+      <div className="search__result">
+        <IssuesTable {...this.props} />
+        <Pagination {...this.props} onClick={(url) => this.onPagination(url)} />
+      </div>
+    );
     return (
       <div className="search">
-        <div className="search__header">
-          <AppBar
-            title="Welcome to react"
-            iconElementLeft={
-              <img src={logo} className="search__logo" alt="logo" />
-            }
-          />
-        </div>
+        <AppBar
+          className="search__header"
+          title="Welcome to react"
+          iconElementLeft={
+            <img src={logo} className="search__logo" alt="logo" />
+          }
+        />
         <div className="search__content">
           <div className="search__input-wrap">
-            <div className="search__user-icon">
-              @
-            </div>
-            <div className="search__input search__input_user">
-              <TextField
-                hintText="user"
-                fullWidth={true}
-                ref={(input) => {this.userInput = input}}
-                //value={this.props.user.name || ''}
-              />
-            </div>
-            <div className="search__user-icon">
-              /
-            </div>
-            <div className="search__input search__input_repo">
-              <TextField
-                hintText="repo"
-                fullWidth={true}
-                ref={(input) => {this.repoInput = input}}
-                //value={this.props.user.repo || ''}
-              />
-            </div>
-            <div className="search__button">
-              <RaisedButton label="Search" primary={true} onClick={() => {this.onClick()}} />
-            </div>
+            <div className="search__user-icon">@</div>
+            <TextField
+              className="search__input search__input_user"
+              hintText="user"
+              fullWidth={true}
+              ref={(input) => {this.userInput = input}}
+              //value={this.props.user.name || ''}
+            />
+            <div className="search__user-icon">/</div>
+            <TextField
+              className="search__input search__input_repo"
+              hintText="repo"
+              fullWidth={true}
+              ref={(input) => {this.repoInput = input}}
+              //value={this.props.user.repo || ''}
+            />
+            <RaisedButton label="Search"
+              className="search__button"
+              primary={true}
+              onClick={() => {this.onClick()}} />
           </div>
-          <div className="search__result">
-            <IssuesTable issues={this.props.issues} />
-          </div>
+          {searchResult}
         </div>
       </div>
     );
@@ -74,7 +78,13 @@ class Search extends Component {
   onClick() {
     const name = this.userInput.getValue();
     const repo = this.repoInput.getValue();
-    this.props.onClick(name, repo);
+    this.props.searchIssues(name, repo);
+  }
+
+  onPagination(url) {
+    const name = this.userInput.getValue();
+    const repo = this.repoInput.getValue();
+    this.props.searchIssues(name, repo, url);
   }
 }
 

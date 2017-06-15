@@ -1,0 +1,17 @@
+.pagination {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.pagination__per-page {
+    width: 35px;
+}
+
+.pagination__prev {
+    margin-right: 10px;
+}
+
+.pagination__next {
+    margin-right: 10px;
+}

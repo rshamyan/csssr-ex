@@ -13,12 +13,16 @@ const searchReposReducer = (state, action) => {
                 }
             });
         case Actions.SEARCH_ISSUES_SUCCEDED:
-            const {ids: allIds, byId} = action.issues;
+            const {ids: allIds, byId, next,
+                first, last, prev = state.issues.current, current} = action.issues;
             return Object.assign({}, state, {
                 issues: {
                     isFetching: false,
-                    pagesCount: action.pagesCount,
-                    currentPage: action.currentPage,
+                    next,
+                    first,
+                    last,
+                    prev,
+                    current,
                     byId,
                     allIds
                 }
