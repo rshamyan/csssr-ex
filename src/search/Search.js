@@ -6,13 +6,14 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import * as Actions from './actions';
+import IssuesTable from '../components/issues-table/IssuesTable';
 
-const mapStateToProps = (state) =>({
-    user: {
-      name: state.user.name,
-      repo: state.user.repo
+const mapStateToProps = ({issues: {byId = {}, allIds = []}, user}) =>(
+    {
+      user,
+      issues: allIds.map(id => byId[id])
     }
-});
+);
 
 const mapDispatchToProps = (dispatch) => ({
   onClick(name, repo) {
@@ -61,6 +62,7 @@ class Search extends Component {
             </div>
           </div>
           <div className="search__result">
+            <IssuesTable issues={this.props.issues} />
           </div>
         </div>
       </div>

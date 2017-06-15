@@ -1,0 +1,15 @@
+.table {
+    position: relative;
+}
+
+.table_cell {
+
+}
+
+.table__cell_id {
+    width: 45px;
+}
+
+.table__cell_date {
+    width: 105px;
+}
