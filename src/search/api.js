@@ -1,24 +1,25 @@
 const apiOrigin = `https://api.github.com`;
 
 const mapIssues = (issues, link, current) => {
-    const ids = [];
+    const allIds = [];
     const byId = {};
-    const {next, last, first, prev} = parseLink(link);
+    const links = link ? parseLink(link) : {};
     for (let {
                 id,
                 number,
-                created_at: createdAt,
                 title,
+                created_at: createdAt,
                 user: {
                     avatar_url: avatarUrl, login
                 }
             } of issues) {
-        ids.push(id.toString());
+        allIds.push(id.toString());
         byId[id.toString()] = ({
-            id, number, createdAt: new Date(createdAt), title, user: {avatarUrl, login}
+            id, number, createdAt, title,
+            user: {avatarUrl, login}
         });
     }
-    return {ids, byId, next, last, first, prev, current};
+    return {allIds, byId, pagination: {current, ...links}};
 }
 
 const parseLink = (link) => {
@@ -32,9 +33,12 @@ const parseLink = (link) => {
     return res;
 }
 
-export async function getIssues(user, repo, perPage=30,
-        url=`${apiOrigin}/repos/${user}/${repo}/issues?per-page=${perPage}`) {
+export async function getIssues(user, repo, perPage=10,
+        url=`${apiOrigin}/repos/${user}/${repo}/issues?per_page=${perPage}`) {
     const res = await fetch(url);
     const issues = await res.json();
+    if (!(issues instanceof Array)) {
+        throw Error(`Not array ${res.status}`);
+    }
     return mapIssues(issues, res.headers.get('Link'), url);
 }

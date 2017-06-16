@@ -1,33 +1,27 @@
-import * as Actions from './actions'; 
+import { SEARCH_ISSUES_REQUESTED, SEARCH_ISSUES_SUCCEDED ,
+    SEARCH_ISSUES_FAILED} from './actions';
 
 const searchReposReducer = (state, action) => {
     switch(action.type) {
-        case Actions.SEARCH_ISSUES_REQUESTED:
+        case SEARCH_ISSUES_REQUESTED:
             return Object.assign({}, state, {
                 issues: {
+                    ...state.issues,
                     isFetching: true
                 },
                 user: {
-                    name: action.user,
-                    repo: action.repo
+                    name: action.user.name,
+                    repo: action.user.repo
                 }
             });
-        case Actions.SEARCH_ISSUES_SUCCEDED:
-            const {ids: allIds, byId, next,
-                first, last, prev = state.issues.current, current} = action.issues;
+        case SEARCH_ISSUES_SUCCEDED:
             return Object.assign({}, state, {
                 issues: {
                     isFetching: false,
-                    next,
-                    first,
-                    last,
-                    prev,
-                    current,
-                    byId,
-                    allIds
+                    ...action.issues
                 }
             });
-        case Actions.SEARCH_ISSUES_FAILED:
+        case SEARCH_ISSUES_FAILED:
             return Object.assign({}, state, {
                 issues: {
                     isFetching: false

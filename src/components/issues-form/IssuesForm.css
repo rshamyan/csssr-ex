@@ -1,0 +1,21 @@
+.issues-form {
+  display: flex;
+
+  flex-flow: row nowrap;
+  align-items: center;
+
+  width: 100%;
+}
+
+.issues-form__input {
+  margin-right: 10px;
+  width: 100%;
+}
+
+.issuesform__button {
+  width: 100px;
+}
+
+.issues-form__icon {
+  margin-right: 10px;
+}

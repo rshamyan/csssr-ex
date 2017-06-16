@@ -10,7 +10,7 @@ import {
 
 import './IssuesTable.css';
 
-export default (props) => {
+const IssuesTable = (props) => {
   const rows = props.issues.map(issue => (
     <TableRow key={issue.id} striped={true}>
       <TableRowColumn className="table__cell table__cell_id">
@@ -20,7 +20,7 @@ export default (props) => {
         {issue.title}
       </TableRowColumn>
       <TableRowColumn className="table__cell table__cell_date">
-        {issue.createdAt.toDateString()}
+        {new Date(issue.createdAt).toDateString()}
       </TableRowColumn>
     </TableRow>
   ));
@@ -30,5 +30,7 @@ export default (props) => {
         {rows}
       </TableBody>
     </Table>
-  ); 
+  );
 }
+
+export default IssuesTable;

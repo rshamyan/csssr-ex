@@ -3,17 +3,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import './Pagination.css';
 
-export default ({current, prev, next, first, last, onClick}) => (
+const Pagination = ({current, prev, next, first, last, onPagination}) => (
     <div className="pagination">
         <RaisedButton className="pagination__prev"
             label="PREV"
             disabled={!first}
-            onClick={() => onClick(prev)}
+            onClick={() => onPagination(prev)}
         />
         <RaisedButton className="pagination__next"
             label="NEXT"
             disabled={!last}
-            onClick={() => onClick(next)}
+            onClick={() => onPagination(next)}
         />
         <div className="pagination__per-page">
             <TextField
@@ -24,3 +24,5 @@ export default ({current, prev, next, first, last, onClick}) => (
         </div>
     </div>
 );
+
+export default Pagination;
