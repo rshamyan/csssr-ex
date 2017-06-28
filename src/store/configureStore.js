@@ -1,4 +1,4 @@
-import reducer from '../search/reducers';
+import reducer from './reducers';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
@@ -17,18 +17,20 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-const store = createStore(reducer, {
-    issues: {
-        isFetching: false
-    },
-    user: {
-        name: null,
-        repo: null
-    },
-    repos: {
+const store = createStore(reducer, 
+// {
+//     issues: {
+//         isFetching: false
+//     },
+//     user: {
+//         name: null,
+//         repo: null
+//     },
+//     repos: {
 
-    }
-}, enhancer);
+//     }
+// },
+enhancer);
 
 sagaMiddleWare.run(rootSaga);
 

@@ -2,7 +2,7 @@ import { SEARCH_ISSUES_SUCCEDED, SEARCH_ISSUES_FAILED,
     SEARCH_ISSUES_REQUESTED } from './actions';
 import { getIssues } from './api';
 
-import { call, put, takeEvery, takeLatest, all } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 
 function* fetchIssues(action) {
     try {
