@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Search from './search/Search';
+import App from './app/App';
 import './index.css';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -12,10 +12,8 @@ injectTapEventPlugin();
 ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider>
-            <Search />
+            <App />
         </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
 );
-
-// registerServiceWorker();

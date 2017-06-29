@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import logo from './images/logo.svg';
 import './Search.css';
-import AppBar from 'material-ui/AppBar';
 import { connect } from 'react-redux';
 import { searchIssues } from './actions';
 import IssuesTable from '../components/issues-table/IssuesTable';
@@ -34,33 +32,24 @@ class Search extends Component {
     render() {
         return (
             <div className="search">
-                <AppBar
-                    className="search__header"
-                    title="CSSSR EX"
-                    iconElementLeft={
-                        <img src={logo} className="search__logo" alt="logo" />
-                    }
+                <IssuesForm
+                    name={this.props.user.name}
+                    repo={this.props.user.repo}
+                    onSearchClick={this.onSearchClick}
+                    inProgress={this.props.inProgress}
                 />
-                <div className="search__content">
-                    <IssuesForm
-                        name={this.props.user.name}
-                        repo={this.props.user.repo}
-                        onSearchClick={this.onSearchClick}
-                        inProgress={this.props.inProgress}
-                    />
-                    {this.props.inProgress ?
-                        <LinearProgress mode="indeterminate" />
-                        : <div className="search__dummy-progress"></div>}
-                    {this.props.issues.length > 0 && (
-                        <div className="search__result">
-                            <IssuesTable issues={this.props.issues} />
-                            <Pagination {...this.props.pagination}
-                                onPagination={this.onPagination}
-                                onPerPage={this.onPerPage}
-                            />
-                        </div>
-                    )}
-                </div>
+                {this.props.inProgress ?
+                    <LinearProgress mode="indeterminate" />
+                    : <div className="search__dummy-progress"></div>}
+                {this.props.issues.length > 0 && (
+                    <div className="search__result">
+                        <IssuesTable issues={this.props.issues} />
+                        <Pagination {...this.props.pagination}
+                            onPagination={this.onPagination}
+                            onPerPage={this.onPerPage}
+                        />
+                    </div>
+                )}
             </div>
         );
     }

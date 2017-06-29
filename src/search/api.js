@@ -9,6 +9,8 @@ const mapIssues = (issues, link, current) => {
                 number,
                 title,
                 created_at: createdAt,
+                body: description,
+                state: status,
                 user: {
                     avatar_url: avatarUrl, login
                 }
@@ -16,6 +18,8 @@ const mapIssues = (issues, link, current) => {
         allIds.push(id.toString());
         byId[id.toString()] = ({
             id, number, createdAt, title,
+            description,
+            status,
             user: {avatarUrl, login}
         });
     }
