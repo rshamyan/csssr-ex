@@ -7,7 +7,7 @@ import { call, put, takeLatest, all } from 'redux-saga/effects';
 function* fetchIssues(action) {
     try {
         const issues = yield call(getIssues, action.user.name,
-            action.user.repo, undefined, action.url);
+            action.user.repo, action.perPage, action.url);
         yield put({
             type: SEARCH_ISSUES_SUCCEDED,
             issues

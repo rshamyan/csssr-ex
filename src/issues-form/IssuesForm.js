@@ -23,6 +23,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 class IssuesForm extends Component {
 
+    state = {
+        user: this.props.name,
+        repo: this.props.repo
+    }
+
     render() {
         return (
             <div className="issues-form">
@@ -31,25 +36,27 @@ class IssuesForm extends Component {
                     className="issues-form__input issues-form__input_user"
                     hintText="user"
                     fullWidth={true}
-                    ref={(input) => {this.userInput = input}}
-                    defaultValue={this.props.name}
+                    value={this.state.user}
+                    onChange={this.onUserInputChange}
                 />
                 <span className="issues-form__icon">/</span>
-                <AutoComplete
-                    className="issues-form__input issues-form__input_repo"
-                    hintText="repo"
-                    fullWidth={true}
-                    ref={(input) => {this.repoInput = input}}
-                    defaultValue={this.props.repo}
-                    onUpdateInput={this.onChange}
-                    dataSource={this.props.reposSource}
-                    filter={AutoComplete.noFilter}
-                    openOnFocus={true}
-                />
+                <div className="issues-form__input issues-form__input_repo">
+                    <AutoComplete
+                        className=""
+                        hintText="repo"
+                        fullWidth={true}
+                        onUpdateInput={this.onRepoInputChange}
+                        onNewRequest={this.onRepoInputSelect}
+                        dataSource={this.props.reposSource}
+                        filter={AutoComplete.noFilter}
+                        searchText={this.state.repo}
+                    />
+                </div>
                 <RaisedButton label="Search"
                     className="issues-form__button"
                     primary={true}
-                    onClick={this.onClick} />
+                    onClick={this.onClick}
+                />
             </div>
         );
     }
@@ -58,13 +65,24 @@ class IssuesForm extends Component {
         this.props.getRepos(this.state.user, this.state.repo);
     }, 300);
 
-    onChange = (searchText) => {
+    onUserInputChange = (event) => {
         this.setState({
-            user: this.userInput.getValue(),
-            repo: searchText
-        }, () => {
-            this.getRepos();
+            user: event.target.value
         });
+    }
+
+    onRepoInputChange = (searchText) => {
+        if (searchText !== this.state.repo) {
+            this.setState({
+                repo: searchText
+            }, () => {
+                this.getRepos();
+            });
+        }
+    }
+
+    onRepoInputSelect = () => {
+        this.onClick();
     }
 
     onClick = () => {

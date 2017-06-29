@@ -33,7 +33,7 @@ const parseLink = (link) => {
     return res;
 }
 
-export async function getIssues(user, repo, perPage=10,
+export async function getIssues(user, repo, perPage=30,
         url=`${apiOrigin}/repos/${user}/${repo}/issues?per_page=${perPage}`) {
     const res = await fetch(url);
     const issues = await res.json();

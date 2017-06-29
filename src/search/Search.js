@@ -24,8 +24,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    searchIssues(name, repo, url) {
-        dispatch(searchIssues(name, repo, url));
+    searchIssues(name, repo, url, perPage) {
+        dispatch(searchIssues(name, repo, url, perPage));
     }
 })
 
@@ -36,7 +36,7 @@ class Search extends Component {
             <div className="search">
                 <AppBar
                     className="search__header"
-                    title="Welcome to react"
+                    title="CSSSR EX"
                     iconElementLeft={
                         <img src={logo} className="search__logo" alt="logo" />
                     }
@@ -55,7 +55,9 @@ class Search extends Component {
                         <div className="search__result">
                             <IssuesTable issues={this.props.issues} />
                             <Pagination {...this.props.pagination}
-                                onPagination={this.onPagination} />
+                                onPagination={this.onPagination}
+                                onPerPage={this.onPerPage}
+                            />
                         </div>
                     )}
                 </div>
@@ -70,6 +72,11 @@ class Search extends Component {
     onPagination = (url) => {
         const { name, repo } = this.props.user;
         this.props.searchIssues(name, repo, url);
+    }
+
+    onPerPage = (perPage) => {
+        const { name, repo } = this.props.user;
+        this.props.searchIssues(name, repo, undefined, perPage);
     }
 }
 
